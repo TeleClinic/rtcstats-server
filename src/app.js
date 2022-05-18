@@ -385,7 +385,7 @@ function run() {
     logger.info('[App] Initializing: %s; version: %s; env: %s ...', appName, appVersion, getEnvName());
     let server;
 
-    setupWorkDirectory();
+    // setupWorkDirectory();
 
     if (config.get('server').useHTTPS) {
         server = setupHttpsServer(config.get('server').port);
