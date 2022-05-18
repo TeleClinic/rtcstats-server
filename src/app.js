@@ -471,6 +471,7 @@ function setupHttpServer(port) {
 function setupWebServer() {
     const { useHTTPS, port } = config.get('server');
 
+
     if (!port) {
         throw new Error('[App] Please provide a server port!');
     }
@@ -522,7 +523,7 @@ async function startRtcstatsServer() {
 
     setupSecretManager();
     await setupWebhookSender();
-    setupWorkDirectory();
+    // setupWorkDirectory();
     setupDumpStorage();
     setupFeaturesPublisher();
     setupAmplitudeConnector();
