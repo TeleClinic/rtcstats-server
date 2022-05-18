@@ -73,12 +73,11 @@ async function storeDump(clientId, uniqueClientId) {
 
     try {
         await store.put(uniqueClientId, dumpPath);
+        logger.info('Stored dump in tempfile: %s', dumpPath);
     } catch (err) {
         PromCollector.storageErrorCount.inc();
 
         logger.error('Error storing: %s uniqueId: %s - %s', dumpPath, uniqueClientId, err);
-    } finally {
-        await asyncDeleteFile(dumpPath);
     }
 }
 
@@ -230,7 +229,7 @@ function setupHttpsServer(port) {
         cert: fs.readFileSync(config.get('server').certPath)
     };
 
-    return https.createServer(options, serverHandler).listen(port);
+    return https.createServer(options, serverHandler).listen(port, "0.0.0.0");
 }
 
 /**
@@ -238,7 +237,7 @@ function setupHttpsServer(port) {
  * @param {*} port
  */
 function setupHttpServer(port) {
-    return http.createServer(serverHandler).listen(port);
+    return http.createServer(serverHandler).listen(port, "0.0.0.0");
 }
 
 /**
@@ -260,7 +259,7 @@ function setupMetricsServer(port) {
                 response.end();
             }
         })
-        .listen(port);
+        .listen(port, "0.0.0.0");
 
     return metricsServer;
 }
@@ -386,7 +385,7 @@ function run() {
     logger.info('[App] Initializing: %s; version: %s; env: %s ...', appName, appVersion, getEnvName());
     let server;
 
-    setupWorkDirectory();
+    // setupWorkDirectory();
 
     if (config.get('server').useHTTPS) {
         server = setupHttpsServer(config.get('server').port);
