@@ -57,7 +57,6 @@ async function storeDump(sinkMeta, uniqueClientId) {
     const { webhooks: { sendRtcstatsUploaded } = { sendRtcstatsUploaded: false } } = config;
 
     try {
-
         logger.info(`[S3] Storing dump ${uniqueClientId} with path ${dumpPath}`);
 
         await store?.put(uniqueClientId, dumpPath);
@@ -71,8 +70,6 @@ async function storeDump(sinkMeta, uniqueClientId) {
         PromCollector.storageErrorCount.inc();
 
         logger.error('Error storing: %s uniqueId: %s - %s', dumpPath, uniqueClientId, err);
-    } finally {
-        await asyncDeleteFile(dumpPath);
     }
 }
 
