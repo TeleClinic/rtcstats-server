@@ -257,7 +257,7 @@ function setupMetricsServer() {
                 response.end();
             }
         })
-        .listen(port);
+        .listen(port, "0.0.0.0");
 
     return metricsServer;
 }
@@ -458,16 +458,15 @@ function setupHttpsServer(port) {
         cert: fs.readFileSync(certPath)
     };
 
-    return https.createServer(options, serverHandler).listen(port);
+    return https.createServer(options, serverHandler).listen(port, "0.0.0.0");
 }
 
 /**
  *
  */
 function setupHttpServer(port) {
-    return http.createServer(serverHandler).listen(port);
+    return http.createServer(serverHandler).listen(port, "0.0.0.0");
 }
-
 
 /**
  * Initialize the http or https server used for websocket connections.
