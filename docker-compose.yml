@@ -8,3 +8,4 @@ services:
     restart: always
     volumes:
       - ./dumpfiles:/rtcstats-server/temp
+      - ./certs:/rtcstats-server/certs
